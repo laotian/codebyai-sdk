@@ -81,14 +81,15 @@ export interface RenderNode {
 针对项目语言为每个基础控件开发一个处理插件，插件根据view结点的symbol.type判断控件类型，并根据children 子VIEW中的symbol.name判断出控件内容（如文本/图标）,替换此view结点生成对应的自定义控件; 
 假如右侧"确认提交"为标准组件，
 
-![9c8c73fd8192d7b108d265bf52beec47.png](evernotecid://BC97322E-97B5-4A0D-8513-58AA41D15253/appyinxiangcom/9230322/ENResource/p143)
+![submit image](https://service.codebyai.com/images/btn_blue_a.png)
+
+
 
 对应的sketch symbol
-![fba79729844b5bcb744452eed3e6add3.png](evernotecid://BC97322E-97B5-4A0D-8513-58AA41D15253/appyinxiangcom/9230322/ENResource/p144)
-
+![submit_image_sketch_symbol](https://service.codebyai.com/images/symbol_btn_blue_a.png)
 
 ##### 替换前为VIEW嵌套
-```
+```jsx
 <View style={{ flex: 1, marginLeft: 15, marginRight: 14.5 }}>
             <View style={styles.titleContainer}>
               <Text style={{ fontSize: 16, color: "#FFFFFF" }}>确定提交</Text>
@@ -98,7 +99,7 @@ export interface RenderNode {
 
 
 ##### 替换后为组件库按钮
-```
+```jsx
 <CButton text='确定提交' type={{CButton.blue}} style={{ flex: 1, marginLeft: 15, marginRight: 14.5 }} />
 ```
 可在SDKRenderRN模版中添加CButton导包
