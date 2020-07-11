@@ -84,8 +84,8 @@ export interface RenderNode {
 ![submit image](https://service.codebyai.com/images/btn_blue_a.png)
 
 
+对应的sketch symbol  
 
-对应的sketch symbol
 ![submit_image_sketch_symbol](https://service.codebyai.com/images/symbol_btn_blue_a.png)
 
 ##### 替换前为VIEW嵌套
