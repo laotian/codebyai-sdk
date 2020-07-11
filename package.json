@@ -1,0 +1,30 @@
+{
+  "name": "codebyai-sdk",
+  "version": "1.0.0",
+  "description": "CodeByAI Secondary development",
+  "main": "build/index.js",
+  "typings": "index.d.ts",
+  "scripts": {
+    "build": "./node_modules/.bin/tsc"
+  },
+  "bin": {
+    "codebyai": "build/SDKMain.js"
+  },
+  "dependencies": {
+    "@types/node": "^13.7.1",
+    "typescript": "3.7.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/laotian/codebyai-sdk.git"
+  },
+  "keywords": [
+    "codebyai"
+  ],
+  "author": "tianlupan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/laotian/codebyai-sdk/issues"
+  },
+  "homepage": "https://github.com/laotian/codebyai-sdk#readme"
+}
