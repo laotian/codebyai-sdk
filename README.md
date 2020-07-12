@@ -1,4 +1,4 @@
-The plug-in can natively support picture/text/text input/View/touch background switching; for extended functions,
+[CodeByAI](https://github.com/laotian/CodeByAI) can natively support picture/text/text input/View/touch background switching; for extended functions,
 CodeByAI provides a secondary development tool SDK, which can replace the company's custom components.
 [中文文档](https://github.com/laotian/codebyai-sdk/wiki/CodeByAI-二次开发)
 
