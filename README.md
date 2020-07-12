@@ -1,46 +1,46 @@
-# CodeByAI 二次开发(定制)
-插件可原生支持图片/文本/文本输入/View/触控背景切换；为扩展功能，
-CodeByAI提供了二次开发工具SDK，可以实现公司自定义组件替换。
+The plug-in can natively support picture/text/text input/View/touch background switching; for extended functions,
+CodeByAI provides a secondary development tool SDK, which can replace the company's custom components.
+[中文文档](https://github.com/laotian/codebyai-sdk/wiki/CodeByAI-二次开发)
 
-[CodeByAI-SDK](https://github.com/laotian/codebyai-sdk) 开源项目，采用TS语言开发,开发者可先fork，然后clone到本地并在源码基础上修改。
-需先安装[node.js](https://nodejs.org/en/) ,版本不低于v12.10.0; 
-从fork后的仓库clone,例
+[CodeByAI-SDK](https://github.com/laotian/codebyai-sdk) Open source project, developed in TS language, developers can first fork, then clone to local and modify on the basis of source code.
+[Node.js](https://nodejs.org/en/) needs to be installed first, the version is not lower than v12.10.0;
+Clone from the warehouse after the fork, for example
 ```
 git clone https://github.com/laotian/codebyai-sdk
 cd codebyai-sdk
 npm install
 ```
 
-### 协作
-为实现替换，开发者和设计师要共用一套标准基础控件。  
-设计师通过Sketch Symbol定义组件，并通过约定的图层名称标识组件的各部分。  
-插件导出的布局信息包含组件名称，开发者可通过SDK识别组件名称，替换为项目组件。
+### Collaboration
+To achieve replacement, developers and designers must share a standard set of basic controls.
+The designer defines the component through Sketch Symbol, and identifies each part of the component through the agreed layer name.
+The layout information exported by the plug-in contains the component name, and the developer can identify the component name through the SDK and replace it with the project component.
 
-[Sketch导出]->[读取布局信息]->[处理插件1].....[处理插件N]->[输出]->[保存/预览]
+[Sketch Export]->[Read Layout Information]->[Processing Plugin 1].....[Processing Plugin N]->[Output]->[Save/Preview]
 
 
-### 布局信息
-打开sketch导出的代码目录，可在"CodeByAI"目录找到customized.json
-customized.json包含VIEW布局信息，为VIEW树结构,对应生成的每个VIEW。
+### Layout information
+Open the code directory exported by sketch, you can find customized.json in the "CodeByAI" directory
+customized.json contains VIEW layout information, which is a VIEW tree structure, corresponding to each generated VIEW.
 ```ts
 /**
  * ViewTree
  */
 export interface RenderNode {
-    //view名称, EditText/ImageView/div...
+    //view name, EditText/ImageView/div etc.
     viewName:string,
-    //View Props, android:text/onPress...
+    //View Props, android:text/onPress etc.
     props:{
         name:string,
         value?:string,
-        //RN 专有，代表view为表达式 {} 或普通字符串
+        //RN value type is expression {} or common string?
         expression?:boolean,
     }[],
-    //RN/REACT/VUE view类名
+    //RN/REACT/VUE view class names.
     className:string[],
-    //文本内容
+    //text content
     content?:string,
-    //RN/REACT/VUE styles, color/marginTop...
+    //RN/REACT/VUE styles, color/marginTop etc.
     styles:{
         [key:string]:string;
     },
@@ -51,74 +51,71 @@ export interface RenderNode {
             [key:string]:string;
         }
     }[],
-    //view children, 可修改
     children:RenderNode[],
-    //UDID仅用以调试,不用以输出,非 android:id
+    //UDID,for debug only, not android:id
     id:string,
-    //sketch 图层格式化名称,会被用以样式名称
+    //sketch layer formatted name, to be style name.
     name:string,
-    //sketch图层绝对布局,用以在网页端预览位置
+    //sketch layer absolute position
     layout: {
         left:number;
         top:number;
         right:number;
         bottom:number;
     },
-    //sketch symbol名称,用以替换自定义组件
+    //sketch symbol, to be replaced by company component
     symbol?:{
-        //sketch symbol内部图层名称,如title
+        //layer name in the symbol
         name:string,
-        //sketch symbol类型,如标准控件/开关/开
+        //sketch symbol type name,
         type:string;
     },
-    //代码注释，保留,暂未使用
-    notes?:string,
 }
 
 ```
 
-### 替换示例 - RN按钮
-针对项目语言为每个基础控件开发一个处理插件，插件根据view结点的symbol.type判断控件类型，并根据children 子VIEW中的symbol.name判断出控件内容（如文本/图标）,替换此view结点生成对应的自定义控件; 
-假如右侧"确认提交"为标准组件，
+### Replacement example-RN button
+For each basic control, a processing plug-in is developed for the project language. The plug-in determines the type of the control according to the symbol.type of the view node, and determines the content of the control (such as text/icon) according to the symbol.name in the children sub-VIEW, replacing this view The node generates the corresponding custom control;
+If the "Confirm Submission" on the right is a standard component,
 
 ![submit image](https://service.codebyai.com/images/btn_blue_a.png)
 
 
-对应的sketch symbol  
+Corresponding sketch symbol
 
 ![submit_image_sketch_symbol](https://service.codebyai.com/images/symbol_btn_blue_a.png)
 
-##### 替换前为VIEW嵌套
+##### VIEW nesting before replacement
 ```jsx
 <View style={{ flex: 1, marginLeft: 15, marginRight: 14.5 }}>
             <View style={styles.titleContainer}>
-              <Text style={{ fontSize: 16, color: "#FFFFFF" }}>确定提交</Text>
+              <Text style={{ fontSize: 16, color: "#FFFFFF" }}>submit</Text>
             </View>
           </View>
 ```
 
 
-##### 替换后为组件库按钮
+##### After replacement, the component library button
 ```jsx
-<CButton text='确定提交' type={{CButton.blue}} style={{ flex: 1, marginLeft: 15, marginRight: 14.5 }} />
+<CButton text='submit' type={{CButton.blue}} style={{ flex: 1, marginLeft: 15, marginRight: 14.5 }} />
 ```
-可在SDKRenderRN模版中添加CButton导包
+CButton guide package can be added in SDKRenderRN template
 
-#### 插件代码
-位于plugins/rn/RNPluginButton.ts
+#### Plugin code
+Located in plugins/rn/RNPluginButton.ts
 ```ts
-import {SDKPlugin} from '../../DataDefs';
-import {filterViewTree, visitViewTree} from '../../SDKRenderUtils';
+import {SDKPlugin} from'../../DataDefs';
+import {filterViewTree, visitViewTree} from'../../SDKRenderUtils';
 
 /**
- * 自定义按钮替换演示插件
+ * Custom button replacement demo plugin
  */
-const RNPluginButton: SDKPlugin =  (artBoardWithContext) => {
-    //自上至下递归处理VIEW结点
+const RNPluginButton: SDKPlugin = (artBoardWithContext) => {
+    //Recursively process VIEW nodes from top to bottom
     artBoardWithContext.viewTree = visitViewTree(artBoardWithContext.viewTree,node => {
-        //view对应sketch symbol '按钮/标准按钮/正常态btn_blue_a'
-        if(node.symbol?.type=="按钮/标准按钮/正常态btn_blue_a"){
-            //从以node为根结点的树中查找按钮标题,title为文本图层名称
+        //view corresponds to sketch symbol'button/standard button/normal state btn_blue_a'
+        if(node.symbol?.type=="button/standard button/normal state btn_blue_a"){
+            //Find the button title from the tree with node as the root node, title is the name of the text layer
             const titleView = filterViewTree(node).find(child=>child.symbol?.name==="title");
             if(titleView){
                 node.viewName = "CButton";
@@ -128,10 +125,10 @@ const RNPluginButton: SDKPlugin =  (artBoardWithContext) => {
                 });
                 node.props.push({
                     name:'type',
-                    value: '{CButton.blue}',
+                    value:'{CButton.blue}',
                     expression:true,
                 });
-                //清除嵌套VIEW
+                //Clear nested VIEW
                 node.children = [];
             }
         }
@@ -146,26 +143,26 @@ export default RNPluginButton;
 
 ```
 
-在SDKMain中，针对项目语言配置插件设置.
+In SDKMain, configure the plugin settings for the project language.
 
-### 添加插件后运行
-编译TS,在项目根目录下执行TS编译
+### Run after adding the plugin
+Compile TS, perform TS compilation in the project root directory
 ```
 npm run build
 ```
 
-执行
+carried out
 ```
-node ./build/SDKMain.js 要转换的项目目录
+node ./build/SDKMain.js the project directory to be converted
 ```
 
-即可在要转换的项目目录/CodeByAI/RN等目录中找到包含-custom等转换后的文件，然后打开 要转换的项目目录下的index.html 选择代码类型为 "XX自定义“ 查看.
+You can find the converted files including -custom in the directory of the project to be converted /CodeByAI/RN, and then open the index.html under the directory of the project to be converted and select the code type as "XX custom" to view.
 
-为便于命令行调用，可在转换脚本根目录执行
+In order to facilitate the command line call, it can be executed in the root directory of the conversion script
 ```
-sudo npm install -g .
+sudo npm install -g.
 ```
-之后，即可在任意目录调用脚本调用
+After that, you can call the script call in any directory
 ```
-codebyai 要转换的项目目录
-```    
+codebyai The project directory to be converted
+```
