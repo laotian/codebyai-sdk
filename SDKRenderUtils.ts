@@ -25,11 +25,11 @@ function styleIsEqual(nodeA:RenderNode, nodeB:RenderNode) {
     if(nodeA.scopeStyles.length==0 && nodeB.scopeStyles.length==0){
         return true;
     }
-    const nodeAKeys = Object.keys(nodeA.scopeStyles).sort();
-    const nodeBKeys = Object.keys(nodeB.scopeStyles).sort();
-    return nodeAKeys.every((value, index) => {
-        return nodeBKeys[index]==value && objectIsEqual(nodeA[value],nodeB[value]);
-    })
+    return  nodeA.scopeStyles.forEach((scopeStyle,index)=>{
+        const thatScopeStyle = nodeB.scopeStyles[index];
+        return scopeStyle.scope == thatScopeStyle.scope
+                && objectIsEqual(scopeStyle.styles,thatScopeStyle.styles);
+    });
 }
 
 function getLines(str:String) {

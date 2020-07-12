@@ -20,7 +20,7 @@ export default function SDKRender(artBoardWithContext:SDKArtBoardWithContext):SD
         scale:2,
     },artBoardWithContext.context);
 
-    const componentNames: string[] = ["View","Text","Image","ImageBackground","TextInput","StyleSheet"];
+    const componentNames: string[] = ["View","Text","Image","ImageBackground","TextInput","StyleSheet","TouchableWithoutFeedback","TouchableHighlight"];
     const artBoard = artBoardWithContext.artBoard;
 
     let styleLineArray = new Array<StyleCodeLine>();

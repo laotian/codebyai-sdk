@@ -13,6 +13,8 @@ import SDKRenderVue from "./SDKRenderVue";
 import SDKRenderRN from "./SDKRenderRN";
 import SDKRenderAndroid from "./SDKRenderAndroid";
 import RNPluginButton from './plugins/rn/RNPluginButton';
+import RNPluginSwitch from "./plugins/rn/RNPluginSwitch";
+import RNPluginCheckbox from "./plugins/rn/RNPluginCheckbox";
 
 //sourceDir or file in sourceDir, index.html etc.
 let sourceDir = process.argv[2]
@@ -22,7 +24,7 @@ if(sourceDir && fs.existsSync(sourceDir) && fs.lstatSync(sourceDir).isFile()){
 
 const codeSDKArtBoard:CustomizedSDKArtBoard = readArtBoards(sourceDir);
 //todo replace RNPluginButton to your plugins
-const rnSDKTargetArtBoards:SDKTargetArtBoard[] = processCode(sourceDir,codeSDKArtBoard.rn,[RNPluginButton],SDKRenderRN,"-custom.js",(index)=>{
+const rnSDKTargetArtBoards:SDKTargetArtBoard[] = processCode(sourceDir,codeSDKArtBoard.rn,[RNPluginButton,RNPluginSwitch,RNPluginCheckbox],SDKRenderRN,"-custom.js",(index)=>{
    return { scale: 14 }
 });
 const reactSDKTargetArtBoards:SDKTargetArtBoard[] = processCode(sourceDir,codeSDKArtBoard.react,[],SDKRenderReact,"-custom.js",(index)=>{
