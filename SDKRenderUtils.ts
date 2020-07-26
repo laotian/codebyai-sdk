@@ -85,7 +85,7 @@ function createCSS(renderNodeRoot:RenderNode):Map<string,string> {
         }else{
             let styleStr=formatStyleToCSS(className,'',renderNode.styles,indent);
             renderNode.scopeStyles.forEach(scopeStyle=>{
-                styleStr=formatStyleToCSS(className,scopeStyle.scope,scopeStyle.styles,indent);
+                styleStr+=formatStyleToCSS(className,scopeStyle.scope,scopeStyle.styles,indent);
             });
             if(styleStr.length>0){
                 cssName = className;
@@ -210,7 +210,8 @@ function renderNode2HtmlViewNode(node:RenderNode, padding:number, codeType:CODE_
         codeLine:{
             from: 0,
             end: getLines(jsx),
-        }
+        },
+        componentName:node.componentName,
     };
     if(node.asset && node.asset.length==1 && node.asset[0].path){
         const slice = node.asset[0].targetPath;
