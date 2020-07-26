@@ -53,6 +53,7 @@ export interface RenderNode {
         //sketch symbol type name,
         type:string;
     },
+    componentName?: string;
     //code notes, preserved only
     notes?:string,
     asset?: Asset[],
@@ -87,6 +88,7 @@ export interface HtmlViewNode{
         }
     ]
     name?: string;
+    componentName?:string;
 }
 
 export interface BaseArtBoard {
