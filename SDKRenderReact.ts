@@ -43,7 +43,6 @@ export default function SDKRender(artBoardWithContext:SDKArtBoardWithContext):SD
     }).map(node=>`import ${node.asset[0].importName} from './images/${node.asset[0].targetPath}'`).join("\n");
     // componentNames.push("StyleSheet");
     let generatedComponent = `import React, { Component } from 'react';
-import './codeByAI.css';
 import './${renderConfig.cssFileName}';
 ${importImages}
 

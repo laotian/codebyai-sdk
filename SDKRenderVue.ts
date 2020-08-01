@@ -34,7 +34,6 @@ export default function SDKRender(artBoardWithContext:SDKArtBoardWithContext):SD
     generatedComponent+=`${component.codes}</template>
 
 <script>
-import './codeByAI.css'
 // Manually set the base font size: ${renderConfig.scale}px for rem
 // html{font-size: ${renderConfig.scale}px}
 export default {

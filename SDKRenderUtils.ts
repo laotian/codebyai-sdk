@@ -146,26 +146,30 @@ function renderNode2HtmlViewNode(node:RenderNode, padding:number, codeType:CODE_
     const space = renderSpace(padding);
     let jsx = space;
     jsx+=`<${componentName}`;
+    let propPre = renderSpace(1);
+    let propJoin = ' ';
+    let quote = '\'';
+    if(codeType=='android'){
+        propPre = renderSpace(padding+2);
+        propJoin = "\n";
+        jsx+=propJoin;
+        quote = '"';
+    }
+    const allProps = [].concat(node.props);
     if(node.className.length>0) {
         const className = node.className.join(" ");
         const classNameKey = codeType=="react" ? "className" : "class";
-        jsx += ` ${classNameKey}='${className}'`
+        allProps.unshift({
+            name:classNameKey,
+            value:className,
+        })
     }
-    if(codeType=='android'){
-        jsx+="\n";
-    }
-    let propPre = ' ';
-    let propJoin = '';
-    if(codeType=='android'){
-        propPre =  renderSpace(padding+2);
-        propJoin = "\n";
-    }
-    const props = node.props.map(p=>{
+    const props = allProps.map(p=>{
         let content = `${propPre}${p.name}`;
         if(p.expression){
             content+=`={${p.value}}`;
         }else if(p.value!=undefined){
-            content += `='${p.value}'`
+            content += `=${quote}${p.value}${quote}`
         }
         return content;
     }).join(propJoin);

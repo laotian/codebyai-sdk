@@ -106,7 +106,7 @@ export default function SDKRender(artBoardWithContext:SDKArtBoardWithContext):SD
         if(scale>1 && targetSrc.endsWith("@2x.png")){
             targetSrc = targetSrc.replace("@2x.png",".png");
         }
-        return `import ${node.asset[0].importName} from './images/${targetSrc}'`;
+        return `import ${node.asset[0].importName} from './images/${targetSrc}';`;
     }).join("\n");
 
     const component = renderNode2HtmlViewNode(rootNode,6,"rn");
