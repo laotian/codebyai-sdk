@@ -53,10 +53,10 @@ export function readArtBoards(sourceDir:string):CustomizedSDKArtBoard {
 }
 
 export function saveArtBoards(sourceDir:string, customCodes:HtmlArtBoardsCustom) {
-    const bakFile = path.resolve(sourceDir,"index.html.bak");
+    const bakFile = path.resolve(sourceDir,"bak","index.html");
     const htmlFile = path.resolve(sourceDir,"index.html");
     if(!fs.existsSync(bakFile)){
-        throw `${sourceDir}/index.html.bak not found`
+        throw `${bakFile} not found`
     }
     let htmlContent = fs.readFileSync(bakFile,{encoding:'utf8'});
     const generateArtBoardsOld:HtmlArtBoards = JSON.parse(fs.readFileSync(path.resolve(sourceDir,"CodeByAI/generate.json"),{encoding:'utf8'}));
@@ -66,7 +66,7 @@ export function saveArtBoards(sourceDir:string, customCodes:HtmlArtBoardsCustom)
     };
 
     htmlContent = template(htmlContent,{
-        codeArtboards:`smApp.project.codeArtboards=${JSON.stringify(generateArtBoards, undefined, 2)};`
+        codes:`codes=${JSON.stringify(generateArtBoards, undefined, 2)};`
     });
     fs.writeFileSync(htmlFile, htmlContent, {encoding:'utf8'});
 }
